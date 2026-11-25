@@ -5,5 +5,19 @@
   "author": {
     "name": "Modern Mail",
     "url": "https://modernmailapp.com"
-  }
+  },
+  "displayName": "Modern Mail",
+  "homepage": "https://www.modernmailapp.com",
+  "repository": "https://github.com/ModernMail/agent-integrations",
+  "privacyPolicyUrl": "https://www.modernmailapp.com/policies/privacy-policy",
+  "supportUrl": "https://www.modernmailapp.com/pages/contact",
+  "documentationUrl": "https://github.com/ModernMail/agent-integrations/tree/main/anthropic",
+  "termsOfServiceUrl": "https://www.modernmailapp.com/policies/terms-of-service",
+  "icon": ".claude-plugin/icon.png",
+  "keywords": [
+    "letters",
+    "stationery",
+    "writing",
+    "drafts"
+  ]
 }

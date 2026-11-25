@@ -1,18 +1,19 @@
 {
   "repository": "ModernMail/modern-mail",
-  "commit": "3d3209c309d4e36053b7ca201798a365eca0f24d",
+  "commit": "3c9982dc9ecbc1e0225e239863ae74018e99c3cd",
   "files": {
     "LICENSE": "b493420382c3c492d414275f9a9a03aeb020959d64bc1bbf68dce9b6eec657fa",
     "README.md": "50095692f620ee47f1bc5e488292b87c5144a69baed3c01051a877f79e460a82",
-    "anthropic/.claude-plugin/plugin.json": "0cfdebdd055e8919c29774cf98cbecdd9294337ab712a176cb45bd2962ba9143",
+    "anthropic/.claude-plugin/plugin.json": "ca4ff07ac3bdf92a5e86877435cb95fcb598a6ea6605de5625da1b55e7085361",
     "anthropic/.mcp.json": "3b7f299a4d93f3e26b25b393d7c363fb106138fce99d98df91bbfea6aa15863e",
-    "anthropic/README.md": "fbfce6d34946fcd2da18c140dc88c5ddb09ee8d74b26f53ab6bb5264b6e61b7c",
+    "anthropic/README.md": "f7da64a7825c0a4f0b93eae62176702033a23bba01c1837cf38fcd9ab2d5e558",
     "anthropic/commands/write-letter.md": "05eb7dcc61fe93d5ca549b3af863065e41de3201fb1e6ac7b0fb3ef7e8f867e4",
     "openai/assets/icon.png": "50c287b468239cce38852b98950430882bb6ebaf03e29529c0bc199b88a1f617",
     "openai/mcp-auth.json": "ffa456c46000bd349b416865c33c0da33a0661900516e8d95d759700883b4499",
     "openai/package.py": "0c5d370952f8746889f5e4314bc3a5895f5989d30eeecbf98bdb4ce48303e03a",
     "openai/plugin.json": "a30df43e4debd67d0b5a26cf180e3d99b89260a935284309aef9709d9a19673d",
     "shared/GUIDANCE.md": "05eb7dcc61fe93d5ca549b3af863065e41de3201fb1e6ac7b0fb3ef7e8f867e4",
-    "shared/production-mcp.json": "522a3cce2ea2cb17aa639770cd29ce5e245934fa7f7fc0660f37a5a64868beab"
+    "shared/production-mcp.json": "522a3cce2ea2cb17aa639770cd29ce5e245934fa7f7fc0660f37a5a64868beab",
+    "anthropic/.claude-plugin/icon.png": "50c287b468239cce38852b98950430882bb6ebaf03e29529c0bc199b88a1f617"
   }
 }

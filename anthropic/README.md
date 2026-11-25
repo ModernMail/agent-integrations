@@ -21,3 +21,9 @@ The plugin sends requested letter copy, recipient details, card choices, and rec
 ## Release status
 
 Preparation draft, not submitted or published. Licensing, public documentation/support links, live tool testing, and directory validation remain release gates.
+
+## Public links
+
+- [Privacy policy](https://www.modernmailapp.com/policies/privacy-policy)
+- [Support](https://www.modernmailapp.com/pages/contact)
+- [Terms of service](https://www.modernmailapp.com/policies/terms-of-service)
