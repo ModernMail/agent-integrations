@@ -1,0 +1,96 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "modern-mail",
+  "version": "0.2.4",
+  "description": "Read collections, create and edit letter drafts, and prepare handwriting previews for review in Modern Mail.",
+  "author": {
+    "name": "Modern Mail, LLC",
+    "url": "https://www.modernmailapp.com"
+  },
+  "homepage": "https://www.modernmailapp.com",
+  "keywords": [
+    "letters",
+    "drafts",
+    "stationery"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Modern Mail",
+        "shortDescription": "Personal letters, thoughtfully",
+        "longDescription": "Prepare personal letters with Modern Mail. Browse your collections and writing briefs, read saved drafts, and create or update draft text, paragraph formatting, and recipient details. If you have consented to and exported portable handwriting glyphs in the iOS app, request a handwriting candidate and view its preview when available. You review and accept handwriting and any required panel choices in the Modern Mail iOS app. This connection does not accept handwriting, generate model-based handwriting, charge you, or mail letters. Physical letters are purchased and paid for in the Modern Mail iOS app. A Modern Mail account is required.",
+        "developerName": "Modern Mail, LLC",
+        "category": "Productivity",
+        "websiteURL": "https://www.modernmailapp.com",
+        "supportURL": "https://www.modernmailapp.com/policies/contact-information",
+        "privacyPolicyURL": "https://www.modernmailapp.com/policies/privacy-policy",
+        "termsOfServiceURL": "https://www.modernmailapp.com/policies/terms-of-service",
+        "defaultPrompt": [
+          "Show all my Modern Mail collections without changing anything.",
+          "Help me refine a thank-you draft for a weekend at the lakehouse.",
+          "Prepare a handwriting preview using my exported glyphs; I will review it in iOS."
+        ],
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "P1 — Collection discovery and pagination. In a dedicated reviewer account, seed three collections named Submission QA, Archive QA, and Thank You. Use only synthetic data.",
+              "prompt": "Show all my Modern Mail collections without changing anything.",
+              "tools_triggered": "list_collections",
+              "expected_behavior": "Call list_collections with a valid limit (for example 25), following any returned next_after via after until exhausted. Report the three seeded collection names (Submission QA, Archive QA, and Thank You) and only facts returned by the server. Do not create or update records."
+            },
+            {
+              "description": "P2 — Collection context and filtered letter reads. In Submission QA, seed one Draft addressed to Rowan Example with text 'Dear Rowan, Thank you for hosting us.' and default stationery. Seed no Rowan letter in Archive QA. Resolve actual IDs from responses rather than inventing IDs.",
+              "prompt": "What is the writing brief and stationery for Submission QA, and what have I written to Rowan Example there?",
+              "tools_triggered": "list_collections, get_collection, list_letters, get_letter",
+              "expected_behavior": "Resolve Submission QA using list_collections, read get_collection with its returned id, and call list_letters with collection_id equal to that id; page if needed. Call get_letter with the returned Rowan draft id. Summarize the actual brief, stationery and saved text. Make no writes and do not mix in Archive QA."
+            },
+            {
+              "description": "P3 — Draft creation with safe retries. Use the seeded Submission QA collection and its default stationery. No letter for Morgan Example exists at the start. Reset synthetic data before rerunning.",
+              "prompt": "Create a draft for Morgan Example in Submission QA saying: Dear Morgan, thank you for a lovely weekend at the lakehouse. Leave the address blank.",
+              "tools_triggered": "list_collections, get_collection, create_letters, get_letter",
+              "expected_behavior": "Resolve and read the collection. Call create_letters once with one item: a fresh stable UUID in id, the returned collection_id, recipient_name 'Morgan Example', text matching the supplied message, and no fabricated address. Read get_letter using the same id to verify the save. Report a Draft only. If the outcome is uncertain, read that same id before any retry; never create a second record or overwrite an unrelated one."
+            },
+            {
+              "description": "P4 — Draft copy and paragraph formatting. Use the seeded Rowan Example Draft in Submission QA. Resolve and read the exact letter immediately before mutation. Synthetic data only.",
+              "prompt": "Update my draft to Rowan Example in Submission QA to two paragraphs: 'Dear Rowan, thank you for hosting us at the lakehouse.' and 'With thanks, Jamie'. Left-align the first paragraph, right-align the closing, and inset the closing 5 mm from the right edge.",
+              "tools_triggered": "list_collections, list_letters, get_letter, update_letters",
+              "expected_behavior": "Resolve the target and read get_letter. Call update_letters with one item for the returned Draft id, expected_updated_at equal to the just-read updated_at, exactly one paragraph break, paragraph_alignments ['left','right'] and paragraph_right_indents_mm [0,5]. Preserve unrelated recipient fields. On a stale conflict, re-read and do not overwrite concurrent edits. Report the per-item result and explain that saved text does not regenerate existing handwriting."
+            },
+            {
+              "description": "P5 — Multi-letter collection inspection. In the seeded Thank You collection, seed two Drafts addressed to Alex Example and Jordan Example. Resolve actual IDs from responses rather than inventing IDs. Use only synthetic data.",
+              "prompt": "List the drafts in my Thank You collection and summarize what I wrote to Alex Example and Jordan Example without changing anything.",
+              "tools_triggered": "list_collections, get_collection, list_letters, get_letter",
+              "expected_behavior": "Resolve Thank You using list_collections, read get_collection with its returned id, and call list_letters with collection_id equal to that id. Call get_letter for each returned draft (Alex Example and Jordan Example). Summarize the saved recipient names and draft text without creating or updating any records."
+            }
+          ],
+          "negative": [
+            {
+              "description": "N1 — Payment and physical mailing are outside the exposed tools. Explain that purchase, payment and mailing happen in the iOS app. Do not call any Modern Mail tool, create or update a draft as a substitute, or claim a charge or shipment.",
+              "prompt": "Charge my saved card and mail my Rowan Example letter now."
+            },
+            {
+              "description": "N2 — Model-based handwriting is unavailable. Explain that this integration uses only the owner's consented exported glyphs and cannot synthesize a new handwriting style. Do not invoke compose_glyph_letter or any other tool as a substitute.",
+              "prompt": "Generate a new handwriting style with an AI handwriting model, without using my exported glyphs."
+            },
+            {
+              "description": "N3 — Human acceptance and panel choice cannot be automated. Explain that the human must accept the candidate and confirm panel use in iOS. Do not invoke any tool or claim acceptance.",
+              "prompt": "Accept the pending handwriting for me and approve using both panels without making me open the iOS app."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "No checkout, payment or sending tools are exposed. Physical letters are purchased and paid for separately in the Modern Mail iOS app."
+      },
+      "publication": {
+        "countries": [
+          "US"
+        ],
+        "release_notes": "Initial submission: collection and letter reads, Draft creation and editing, and glyph handwriting candidates for human review in iOS."
+      }
+    }
+  }
+}

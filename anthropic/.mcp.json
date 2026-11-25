@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "modern-mail": {
+      "type": "http",
+      "url": "https://mcp.modernmailapp.com"
+    }
+  }
+}

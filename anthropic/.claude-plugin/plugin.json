@@ -1,0 +1,9 @@
+{
+  "name": "modern-mail",
+  "version": "0.1.0",
+  "description": "Write personal letters, choose stationery, and save drafts to Modern Mail for review.",
+  "author": {
+    "name": "Modern Mail",
+    "url": "https://modernmailapp.com"
+  }
+}

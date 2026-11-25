@@ -1,0 +1,12 @@
+{
+  "modern-mail": {
+    "auth": {
+      "type": "oauth",
+      "client": {
+        "mode": "provided",
+        "clientId": "5be5cf71-a626-4c86-af83-d966197a2095",
+        "tokenEndpointAuthMethod": "client_secret_post"
+      }
+    }
+  }
+}
